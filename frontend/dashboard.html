@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - SLRTCE File Manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <div class="logo">📁</div>
+        <h1>SLRTCE File Manager</h1>
+      </div>
+      <div class="header-right">
+        <div class="user-info">
+          <img id="userPic" src="" alt="Profile" class="profile-pic">
+          <div class="user-details">
+            <span id="userName" class="user-name">Loading...</span>
+            <span id="userEmail" class="user-email">Loading...</span>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container">
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="students">Students</button>
+        <button class="tab-btn" data-tab="upload">Upload Files</button>
+        <button class="tab-btn" data-tab="subjects">Subjects</button>
+      </div>
+
+      <!-- Students Tab -->
+      <div id="students-tab" class="tab-content active">
+        <div class="section-header">
+          <h2>Manage Students</h2>
+          <button class="btn-primary" onclick="showAddStudentForm()">+ Add Student</button>
+        </div>
+
+        <!-- Add Student Form -->
+        <div id="addStudentForm" class="form-card hidden">
+          <h3>Add New Student</h3>
+          <form onsubmit="handleAddStudent(event)">
+            <div class="form-group">
+              <label>Student Name</label>
+              <input type="text" id="studentName" placeholder="Enter full name" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" id="studentEmail" placeholder="student@slrtce.in" required>
+            </div>
+            <div class="form-group">
+              <label>Subject</label>
+              <select id="studentSubject" required>
+                <option value="">Select subject</option>
+              </select>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" onclick="hideAddStudentForm()">Cancel</button>
+              <button type="submit" class="btn-primary">Add Student</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Students List -->
+        <div id="studentsList" class="students-grid">
+          <!-- Students will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Upload Tab -->
+      <div id="upload-tab" class="tab-content">
+        <div class="section-header">
+          <h2>Upload Files to Students</h2>
+        </div>
+
+        <div class="upload-card">
+          <form id="uploadForm" onsubmit="handleFileUpload(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Subject</label>
+                <select id="uploadSubject" required>
+                  <option value="">Select subject</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Document Type</label>
+                <select id="documentType" required>
+                  <option value="">Select type</option>
+                  <option value="Assignments">Assignments</option>
+                  <option value="Experiments">Experiments</option>
+                  <option value="Notes">Notes</option>
+                  <option value="Question Papers">Question Papers</option>
+                  <option value="Solutions">Solutions</option>
+                  <option value="Study Material">Study Material</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Select Students</label>
+              <div class="student-checkboxes" id="studentCheckboxes">
+                <!-- Checkboxes will be loaded here -->
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Select File</label>
+              <div class="file-input-wrapper">
+                <input type="file" id="fileInput" required onchange="updateFileName()">
+                <label for="fileInput" class="file-input-label">
+                  <span id="fileName">Choose a file...</span>
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary btn-block">Upload File</button>
+          </form>
+
+          <!-- Upload Results -->
+          <div id="uploadResults" class="upload-results hidden"></div>
+        </div>
+      </div>
+
+      <!-- Subjects Tab -->
+      <div id="subjects-tab" class="tab-content">
+        <div class="section-header">
+          <h2>Manage Subjects</h2>
+          <button class="btn-primary" onclick="showAddSubjectForm()">+ Add Subject</button>
+        </div>
+
+        <!-- Add Subject Form -->
+        <div id="addSubjectForm" class="form-card hidden">
+          <h3>Add New Subject</h3>
+          <form onsubmit="handleAddSubject(event)">
+            <div class="form-group">
+              <label>Subject Name</label>
+              <input type="text" id="subjectName" placeholder="e.g., Data Structures" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Academic Year</label>
+                <input type="text" id="academicYear" placeholder="e.g., 2024-25">
+              </div>
+              <div class="form-group">
+                <label>Semester</label>
+                <input type="text" id="semester" placeholder="e.g., Sem 5">
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn-secondary" onclick="hideAddSubjectForm()">Cancel</button>
+              <button type="submit" class="btn-primary">Add Subject</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Subjects List -->
+        <div id="subjectsList" class="subjects-list">
+          <!-- Subjects will be loaded here -->
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Snackbar -->
+  <div id="snackbar"></div>
+
+  <!-- Loading Overlay -->
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loader"></div>
+  </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
